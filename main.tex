@@ -1,0 +1,142 @@
+\documentclass{article}
+
+\usepackage{tikz}%графы  
+
+\usepackage{cmap}                   
+\usepackage{mathtext}   
+\usepackage{mathtools}
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{tipx}
+\usepackage{tabularx,array,booktabs}
+\usepackage{algorithm2e}
+\usepackage{listings}
+\usepackage{hyperref}
+%изображения
+\usepackage{graphicx}%Вставка картинок правильная
+\usepackage{float}%"Плавающие" картинки
+\usepackage{wrapfig}%Обтекание фигур (таблиц, картинок и прочего)
+\usepackage{setspace}
+\usepackage[normalem]{ulem}
+\usepackage{arcs}
+\usepackage[T1,T2A]{fontenc}        
+\usepackage[utf8]{inputenc}         
+\usepackage[english, russian]{babel} 
+\usepackage[top=0.35in, bottom=0.5in, left=0.3in,right=0.3in]{geometry}
+\usepackage{scalerel}
+\usepackage{stackengine}
+\stackMath
+\newtheorem{theorem}{Теорема}
+\newtheorem{definition}{Определение}
+\newtheorem{proposal}{Предположение}
+\newtheorem{notice}{Замечание}
+\newtheorem{statement}{Положение}
+\newtheorem{corollary}{Следствие}
+\newtheorem{lemma}{Лемма}
+\newtheorem{observation}{Наблюдение}
+\newtheorem{problem}{Задача}
+\newtheorem{claim}{Решение}
+\newtheorem{explanation}{Пояснение}
+\newtheorem*{explanation*}{Пояснение}
+
+\newcommand{\RomanNumeralCaps}[1]
+    {\MakeUppercase{\romannumeral #1}}
+\newenvironment{shortlist}
+  {\renewcommand{\item}{\renewcommand{\item}{\unskip\space\textbullet~}}}
+  {}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}    
+\newcommand\reallywidesmile[1]{%
+\stackon[0.5pt]{#1}{%
+\stretchto{%
+  \scaleto{%
+    \scalerel*[\widthof{#1}]{\mkern-1.5mu\smile\mkern-2mu}%
+    {\rule[-\textheight/2]{1ex}{\textheight}}%
+  }{\textheight}%
+}{0.8ex}}%
+}
+\parskip 1ex
+
+
+\begin{document}
+\section*{Семинары по дискретной математике}
+\section{Автоморфизмы графа. Планарные графы. Поток на графе}
+\subsection{Автоморфизм графа}
+\begin{definition}
+    \textbf{Граф} - это множенство точек $V$ и множенство ориентированных
+     рёбер $\overrightarrow{E}$,
+    на которых заданы отображения $S:\overrightarrow{E} \rightarrow V$ и $t:\overrightarrow{E} \rightarrow V$ такие,
+    что $t(e)=v \Rightarrow \phi(t(e)) = \phi(v)$.
+\end{definition}
+\begin{explanation*}
+    Вот, что такое отображения выше:
+    \begin{itemize}
+        \item $S:\overrightarrow{E} \rightarrow V$ - функция, возвращающая
+        начало ребра
+        \item$t:\overrightarrow{E} \rightarrow V$ - функция, возвращающая конец ребра
+        \item Последние условие на отображения говорит нам о сохранении структуры графа
+    \end{itemize}
+\end{explanation*}
+
+\begin{definition}
+    \textbf{Изоморфизм графов} - это биективное отображение графа $G$ на граф $H$ с сохранением
+    структуры.
+\end{definition}
+\begin{explanation*}
+    Пусть $G, H$ - графы, тогда биективные отображения
+        $$\phi : V_{G} \rightarrow V_{H}$$
+        $$\psi : \overrightarrow{E}_{G} \rightarrow \overrightarrow{E}_{H}$$
+задающие биекции, с сохранением структуры, задают изоморфизм.
+\end{explanation*}
+\textbf{Пример:} даны графы $G, H$ соответственно
+
+\begin{tikzpicture}
+    \begin{scope}[every node/.style={circle,thick,draw}]
+        \node[shape=circle,draw=black] (A) at (0,1.5) {$a$};
+        \node[shape=circle,draw=black] (B) at (-1.5,0) {$b$};
+        \node[shape=circle,draw=black] (C) at (-1.25,-2) {$c$};
+        \node[shape=circle,draw=black] (D) at (1.25,-2) {$d$};
+        \node[shape=circle,draw=black] (E) at (1.5,0) {$e$};
+    \end{scope}
+    
+    \begin{scope}[every node/.style={circle,thick,draw}]
+    \path (A) edge (B);
+    \path (A) edge (E);
+    \path (B) edge (C);
+    \path (E) edge (D);
+    \path (D) edge (C);
+    \end{scope}
+
+    \begin{scope}[every node/.style={circle,thick,draw}]
+        \node[shape=circle,draw=black] (A) at (6,1.5) {$\alpha$};
+        \node[shape=circle,draw=black] (B) at (6-1.5,0) {$\varepsilon$};
+        \node[shape=circle,draw=black] (C) at (6-1.25,-2) {$\delta$};
+        \node[shape=circle,draw=black] (D) at (6+1.25,-2) {$\gamma$};
+        \node[shape=circle,draw=black] (E) at (6+1.5,0) {$\beta$};
+    \end{scope}
+    \begin{scope}[every node/.style={circle,thick,draw}]
+        \path (A) edge (D);
+        \path (A) edge (C);
+        \path (B) edge (C);
+        \path (B) edge (A);
+        \path (E) edge (D);
+        \path (E) edge (A);
+        \path (E) edge (B);
+        \path (E) edge (C);
+        \path (B) edge (D);
+        \path (D) edge (C);
+    \end{scope}
+
+    \node[text width=6cm, anchor=west, right] at (7.5,0)
+    {
+        \begin{multline*}
+            \phi : V_{G} \rightarrow V_{H}\text{ - биективное отображение, тогда:}\\
+            \phi(a) = \alpha,\\
+            \phi(b) = \gamma, \\
+            \phi(c) = \varepsilon, \\
+            \phi(d) = \beta, \\
+            \phi(e) = \delta\\
+        \end{multline*}
+    };
+    \end{tikzpicture}
+    
+\end{document}
