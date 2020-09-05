@@ -116,14 +116,9 @@
     \begin{scope}[every node/.style={circle,thick,draw}]
         \path (A) edge (D);
         \path (A) edge (C);
-        \path (B) edge (C);
-        \path (B) edge (A);
-        \path (E) edge (D);
-        \path (E) edge (A);
         \path (E) edge (B);
         \path (E) edge (C);
         \path (B) edge (D);
-        \path (D) edge (C);
     \end{scope}
 
     \node[text width=6cm, anchor=west, right] at (7.5,0)
@@ -137,6 +132,24 @@
             \phi(e) = \delta\\
         \end{multline*}
     };
-    \end{tikzpicture}
-    
+\end{tikzpicture}
+\\
+\begin{definition}
+    \textbf{Автоморфизм} - изоморфизм графа с собой.
+\end{definition}
+
+\textbf{Пример:}
+
+\begin{tikzpicture}
+    \begin{scope}
+        \node[shape=circle,draw=black] (A) at (0,0) {$A$};
+        \node[shape=circle,draw=black] (B) at (4,0) {$B$};
+        \node[text width=6cm, anchor=north, right] at (0, -1){Это 
+        очень простой граф};
+        %\node
+    \end{scope}
+    \begin{scope}
+        \path (A) edge (B);
+    \end{scope}
+\end{tikzpicture}
 \end{document}
