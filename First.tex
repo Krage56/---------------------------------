@@ -1,7 +1,7 @@
 \section{Автоморфизмы графа. Планарные графы. Поток на графе}
 \subsection{Автоморфизм графа}
 \begin{definition}
-    \textbf{Граф} - это множенство точек $V$ и множенство ориентированных
+    \textbf{Граф} - это множество точек $V$ и множество ориентированных
      рёбер $\overrightarrow{E}$,
     на которых заданы отображения $S:\overrightarrow{E} \rightarrow V$ и $t:\overrightarrow{E} \rightarrow V$ такие,
     что $t(e)=v \Rightarrow \phi(t(e)) = \phi(v)$.
@@ -190,11 +190,77 @@
                     \draw[black, ultra thick][<-] (1,1) arc (0:360:1.4);
                     \fill[yellow] (1,1) circle (2pt);
                 \end{scope}
-                % \begin{scope}
-                %     \node[text width=2cm, anchor=west, right] at (0,0){agsgsasgasga}
-                % \end{scope}
+                \begin{scope}
+                    \node[text width=2cm, anchor=west, right] at (-2.3,1){$h$};
+                    \node[text width=2cm, anchor=west, right] at (-1,1){$e$};
+                    \node[text width=8cm, anchor=west, right] at (3,1){
+                    \begin{enumerate}
+                        \item $Id$
+                        \item $\psi(e) = h, \psi(h) = e$
+                    \end{enumerate}
+                    };
+                \end{scope}
             \end{tikzpicture}
         \end{center}
-        
     \end{notice}
+    \item
+    \begin{tikzpicture}
+         \begin{scope}
+            \draw[black, thick][<-] (4,0.2) arc (15:350:1);
+        \end{scope}
+        \begin{scope}
+            \node[shape=circle, draw=black] (1) at (2,-2) {$c$};
+            \node[shape=circle, draw=black] (2) at (0,0) {$a$};
+            \node[shape=circle, draw=black] (3) at (4,0) {$d$};
+            \node[shape=circle, draw=black] (4) at (2,-4) {$b$};
+            %\node[text width=12cm, anchor=east, right] at (6, 0){};
+        \end{scope}
+        \begin{scope}
+            \path (1) edge (2);
+            \path (1) edge (3);
+            \path (1) edge (4);
+        \end{scope}
+    \end{tikzpicture}
+    \begin{claim*}
+        Петлю можно повернуть двумя способами, вершина $c$ может отобразиться только в себя - см. предыдущий пункт - остаётся 
+        перестановка вершин $a$ и $b$ - их можно расставить двумя способами:
+        не перемещая или отобразив друг в друга. Итого $2*2=4$.
+    \end{claim*}
+    \item 
+    \begin{tikzpicture}
+        \begin{scope}
+            \node[shape=circle, draw=black] (1) at (0,0) {1};
+            \node[shape=circle, draw=black] (2) at (2,-2) {2};
+            \node[shape=circle, draw=black] (3) at (6,-2) {3};
+            \node[shape=circle, draw=black] (4) at (8,0) {4};
+            \node[shape=circle, draw=black] (5) at (8,-4) {5};
+            \node[shape=circle, draw=black] (6) at (0,-4) {6};
+        \end{scope}
+        \begin{scope}
+            \path (1) edge (2);
+            \path (2) edge (3);
+            \path (3) edge (4);
+            \path (3) edge (5);
+            \path (6) edge (2);
+        \end{scope}
+    \end{tikzpicture}
+    \begin{claim*}
+        Вершины №2 и №6 можно расставить двумя способами. Аналогично с вершинами №4 и №5.\\
+        Теперь про вершины №2 и №3: здесь важно, чтобы отображение вершины №2 было инцидентно ребрам, на которые отобразились вершины №1 и №6. Аналогичное условие накладывается на вершину №3. Поэтому для них есть только 2 возможности: либо они отображаются в себя, либо мы отражаем граф относительно центра ребра, соединяющего вершины №2 и №3. \textbf{Итого:} $2*2*2=8$ отображений.
+    \end{claim*}
+    \item
+    \begin{tikzpicture}
+    \begin{scope}
+        \node[shape=circle,draw=black] (A) at (0,0) {$A$};
+        \node[shape=circle,draw=black] (B) at (4,0) {$B$};
+    \end{scope}
+    \begin{scope}
+        \path (A) edge (B);
+        \draw[black, thick] (4,0.4) arc (0:180:2);
+        \draw[black, thick] (0,-0.4) arc (180:360:2);
+    \end{scope}
+\end{tikzpicture}
+\begin{claim*}
+    Все три ребра здесь идентичны, поэтому берём сразу $3!$ способа их расставить. Но их можно ещё и перевернуть, поэтому добавляется ещё 2 варианта. \textbf{Итого:} $3!*2=12$ вариантов.
+\end{claim*}
 \end{enumerate}
