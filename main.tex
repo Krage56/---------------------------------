@@ -1,18 +1,18 @@
-\documentclass{article}
+\documentclass[utf8, 14pt]{article}
 
 \usepackage{tikz}%графы  
 
 \usepackage{indentfirst}%красная строка
-\usepackage{cmap}                   
+                
 \usepackage{mathtext}   
 \usepackage{mathtools}
 \usepackage{amssymb,amsmath}
 \usepackage{amsthm}
-\usepackage{tipx}
+\usepackage{amsfonts}
 \usepackage{tabularx,array,booktabs}
 \usepackage{algorithm2e}
 \usepackage{listings}
-\usepackage{hyperref}
+\usepackage[unicode]{hyperref}
 %изображения
 \usepackage{graphicx}%Вставка картинок правильная
 \usepackage{float}%"Плавающие" картинки
@@ -20,9 +20,13 @@
 \usepackage{setspace}
 \usepackage[normalem]{ulem}
 \usepackage{arcs}
-\usepackage[T1,T2A]{fontenc}        
+
+\usepackage{cmap}   
+\usepackage[T1,T2A]{fontenc}    
 \usepackage[utf8]{inputenc}         
 \usepackage[english, russian]{babel} 
+
+
 \usepackage[top=0.35in, bottom=0.5in, left=0.3in,right=0.3in]{geometry}
 \usepackage{scalerel}
 \usepackage{stackengine}
@@ -59,12 +63,11 @@
 
 \parskip 1ex
 
-
 \begin{document}
 \section*{Семинары по дискретной математике}
 \thispagestyle{empty}
-\setcounter{page}{0}
 \tableofcontents
+\setcounter{page}{0}
 \clearpage
 \include{First}
 \end{document}
