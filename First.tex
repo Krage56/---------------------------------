@@ -675,3 +675,204 @@
     т.к. они легко получаются, при необходимости, из определения.
 \end{notice}
 
+\subsubsection{Множество потоков на графе как линейное пространство}
+
+Теперь проверим, не составляют ли потоки линейное пространство, для этого определим 
+коммутативное ассоциативное дистрибутивное сложение потоков и рассмотрим возможность 
+их умножения на число:
+\begin{enumerate}
+    \item Сложение: \\
+    \begin{tikzpicture}
+        \begin{scope}
+            \draw[black][->] (0,0) -- (4,0);
+            \draw[black][->] (4,-0.2) -- (4,-4);
+            \draw[black][<-] (0.2,-4) -- (3.8,-4);
+            \draw[black][->] (0,-4) -- (0,-0.2);
+            \draw[black][->] (0,-0.1) -- (3.9,-4);    
+        \end{scope}
+        \begin{scope}
+            \node[text width=1cm, anchor=west] at (1.8,0.2){2};
+            \node[text width=1cm, anchor=west] at (4.1,-2){2};
+            \node[text width=1cm, anchor=west] at (2,-4.2){3};
+            \node[text width=1cm, anchor=west] at (-0.4,-2){3};
+            \node[text width=1cm, anchor=west] at (2.1,-2){1};
+            \node[text width=1cm, anchor=west] at (4.4,-2){+};
+        \end{scope}
+        \begin{scope}
+            \draw[black][->] (0+5.2,0) -- (4+5.2,0);
+            \draw[black][->] (4+5.2,-0.2) -- (4+5.2,-4);
+            \draw[black][->] (0.2+5.2,-4) -- (3.8+5.2,-4);
+            \draw[black][<-] (5.2,-4) -- (5.2,-0.2);
+            \draw[black][<-] (5.2,-0.1) -- (3.9+5.2,-4);    
+        \end{scope}
+        \begin{scope}
+            \node[text width=1cm, anchor=west] at (1.8+5.2,0.2){2};
+            \node[text width=1cm, anchor=west] at (4.1+5.2,-2){2};
+            \node[text width=1cm, anchor=west] at (2+5.2,-4.2){5};
+            \node[text width=1cm, anchor=west] at (-0.4+5.2,-2){5};
+            \node[text width=1cm, anchor=west] at (2.1+5.2,-2){7};
+            \node[text width=1cm, anchor=west] at (4.4+5.2,-2){=};
+        \end{scope}
+
+        \begin{scope}
+            \draw[black][->] (0+10.4,0) -- (4+10.4,0);
+            \draw[black][->] (4+10.4,-0.2) -- (4+10.4,-4);
+            \draw[black][->] (0.2+10.4,-4) -- (3.8+10.4,-4);
+            \draw[black][<-] (10.4,-4) -- (10.4,-0.2);
+            \draw[black][<-] (10.4,-0.1) -- (3.9+10.4,-4);    
+        \end{scope}
+        \begin{scope}
+            \node[text width=1cm, anchor=west] at (1.8+10.4,0.2){4};
+            \node[text width=1cm, anchor=west] at (4.1+10.4,-2){4};
+            \node[text width=1cm, anchor=west] at (2+10.4,-4.2){2};
+            \node[text width=1cm, anchor=west] at (-0.4+10.4,-2){2};
+            \node[text width=1cm, anchor=west] at (2.1+10.4,-2){6};
+        \end{scope}
+    \end{tikzpicture}
+    \item Операция умножения на число определяется очевидно: просто умножим все значения потока 
+    на это число, аналогично тому, как мы делали это с обычными векторами. Доп. иллюстраций не 
+    требуется.
+\end{enumerate}
+
+Теперь мы можем с полной уверенностью сказать, что множество потоков на графе образует линейное 
+пространство!
+
+\textbf{Найдём размерность линейного пространства:}
+
+\begin{enumerate}
+    \item Всего имеется 10 рёбер графа.
+    \item $dimV = 10 - 5 - 3 = 10 -5 -4 + 1 =  Р-В+1$
+    \begin{explanation*}
+        Сначала из 10 рёбер мы вычитаем половину, произведя <<отбрасывание>> отрицательных рёбер - 
+        их можно в данной задаче не рассматривать. Затем мы переходим уже к уравнению из первого 
+        семестра линейной алгебры, а именно:
+        $$
+        dim L_{0} = n - rankA 
+        $$
+        где $L_{0}$ - пространство решений ОСЛАУ $A$, $n$ - количество переменных в ней, $rankA$ - ранг матрицы данной 
+        системы.\\ 
+        Теперь поговорим, откуда здесь берётся эта ОСЛАУ. На самом деле, всё очень просто: 
+        необходимо по правилу Киргофа расписать каждый поток на графе как сумму других. Из этого будем 
+        иметь систему из 5 линейных уравнений. В данном случае сразу 2 из них окажутся линейной 
+        комбинацией оставшихся трёх, и мы получим, что ранг данной системы равен 3. Отсюда и получим 
+        выражение после первого знака равенства.
+    \end{explanation*}
+\end{enumerate}
+\newpage
+Теперь, когда доказано, что множество потоков - это векторное пространство, 
+размерность которого нам известна, нужно озаботиться поиском базиса этого 
+пространста. Иначе зачем было всё это?
+
+\textbf{Как ищется базис:}
+\begin{enumerate}
+    \item Найдём остовное дерево графа (это такое поддерево, которое содержит все вершины графа).
+    \item Все рёбра, не вошедшие в остовное дерево, назовём \textit{базисными рёбрами}.
+    \item Теперь из каждого базисного ребра необходимо пройти некоторый цикл, чтобы вернуться в конец этого ребра.
+    Необходимо, чтобы этот цикл проходил \textit{только по рёбрам остовного дерева}, т.е. должно быть только одно 
+    посещённое базисное ребро - то, с которого начался и на котором закончится цикл.
+    \item Полученные конструкции и составят базис потоков на графе.
+\end{enumerate}
+
+Подробнее на примере:\\
+\begin{tikzpicture}[>=stealth',semithick,auto]
+    \begin{scope}
+        \coordinate (A) at (0,0) node[below left]{$A$};
+        \coordinate (B) at (0,3);
+        \coordinate (E) at (3,0);
+        \coordinate (D) at (3,3);
+        \coordinate (C) at (3-1.5,3+1.5);
+        \path[<-] (A) edge node[left] {2} (B);  
+        \path[->] (A) edge node[below left] {2} (E);
+        \path[->] (E) edge node[right] {1} (B)
+        node[below right]{$E$};
+        \path[->] (B) node[left]{$B$} edge node {2}(D)
+        (B) edge node {1} (C);
+        \path[->] (C) edge node {1}(D) node[above]{$C$};
+        \path[->] (D) edge node {3}(E) node[right]{$D$};
+    
+        \coordinate (A1) at (5,0) node[below left]{$A$};
+        \coordinate (B1) at (0+5,3);
+        \coordinate (E1) at (3+5,0);
+        \coordinate (D1) at (3+5,3);
+        \coordinate (C1) at (3-1.5+5,3+1.5);
+        \path[color=red][->] (A1) edge node[below left] {2} (E1)node[left]{$A$};
+        \path[color=red][->] (E1) edge node[right] {1} (B1)
+        node[below right]{$E$};
+        \path[color=red][->] (B1) node[left]{$B$} edge node {2}(D1);
+        \path[color=red][->] (C1) edge node {1}(D1) node[above]{$C$};
+    \end{scope}
+    \node[text width=3cm, anchor=east, right] at (0,-1.5){
+        Теперь в этом графе выберем остовное дерево
+    };
+    \node[text width=3cm, anchor=east, right] at (5,-1.5){
+        Вот и остовное дерево. Получается, что базисными являются рёбра 
+        $\overrightarrow{BA}$ и $\overrightarrow{CB}$.
+    };
+    \node[text width=7cm, anchor=east, right] at (10,2){
+        Далее мы будем строить описанные выше циклы с базисными рёбрами. 
+        Особенность этой процедуры в том, что мы задаём значение потока на 
+        данном ребре совершенно произвольно, как и его направление. Это 
+        лишь скажется на знаке и величине действительного коэффициента 
+        перед данным базисным вектором в разложении данного потока по базису. 
+        Это будет показано ниже.
+    };
+
+    \begin{scope}
+        \node[text width=4cm, anchor=west, right] at (-2.5,-6){
+            Базисный вектор, построенный на $BA$:
+        };
+        \path[->] (2,-5) edge  node[left]{1} (2,-7)
+        (2,-7) edge (4, -7)
+        (4,-7) edge (2,-5);
+    \end{scope}
+    \begin{scope}
+        \node[text width=4cm, anchor=west, right] at (5,-6){
+            На $DE$:
+        };
+        \path[->] (7,-5) edge (9, -5)
+        (9, -5) edge node[right]{1} (9, -7)
+        (9, -7) edge (7, -5);
+    \end{scope}
+    \begin{scope}
+        \node[text width=4cm, anchor=west, right] at (5+6.5,-6){
+            На $CB$:
+        };
+        \path[->] (14,-5) edge node[left]{1} (13,-7)
+        (13, -7) edge (15, -7)
+        (15, -7) edge (14, -5);
+    \end{scope}
+\end{tikzpicture}
+\vspace{2cm}
+
+Теперь разложим данный поток по базису и получим:
+\begin{equation*}
+        \begin{array}{ccccc} 
+        3  * \left( 
+            \begin{array}{c}%это просто костыль для выравнивания
+                \begin{tikzpicture}[>=stealth',semithick,auto]
+                    \path[->] (0,0) edge (2,0)
+                    (2, 0) edge node[right]{1} (2, -2)
+                    (2, -2) edge (0, 0);
+                \end{tikzpicture} 
+            \end{array}\right)
+        &-&1 * \left( 
+            \begin{array}{c}%это просто костыль для выравнивания
+                \begin{tikzpicture}[>=stealth',semithick,auto]
+                    \path[->] (14,-5) edge node[left]{1} (13,-7)
+                    (13, -7) edge (15, -7)
+                    (15, -7) edge (14, -5);
+                \end{tikzpicture} 
+            \end{array}\right) 
+            & + & 2 * \left( 
+                \begin{array}{c}%это просто костыль для выравнивания
+                    \begin{tikzpicture}[>=stealth',semithick,auto]
+                        \path[->] (2,-5) edge  node[left]{1} (2,-7)
+                        (2,-7) edge (4, -7)
+                        (4,-7) edge (2,-5);
+                    \end{tikzpicture} 
+                \end{array}\right) 
+        \end{array}
+\end{equation*}
+
+
+
